@@ -68,30 +68,33 @@
             <div class="col-9">
                 <p class="fs-1">Listado de Proyectos</p>
                 <table class="table">
-                    <thead> <!--datos de cabecera -->
-                        <tr> <!-- fila -->
-                        <th scope="col">id</th> <!--columna de la fila -->
-                        <th scope="col">Título</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Fecha de creación</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        </tr> -->
-                        @foreach($proyectos as $proyecto)
-                        <tr>
-                            <th scope="row">{{$proyecto->id}}</th>
-                            <th>{{$proyecto->titulo}}</th>
-                            <th>{{$proyecto->descripcion}}</th>
-                            <th>{{$proyecto->created_at}}</th>
-                        </tr>
-                @endforeach
-                    </tbody>
+                    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">Título</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Fecha de creación</th>
+        <th scope="col">Acciones</th> <!-- NUEVA COLUMNA -->
+    </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($proyectos as $proyecto)
+                            <tr>
+                                <th scope="row">{{$proyecto->id}}</th>
+                                <td>{{$proyecto->titulo}}</td>
+                                <td>{{$proyecto->descripcion}}</td>
+                                <td>{{$proyecto->created_at}}</td>
+                                <td>
+                                    <!-- Formulario para eliminar -->
+                                    <form action="{{ url('/project/'.$proyecto->id) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este proyecto?')">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                 </table>
             </div>
         </div>

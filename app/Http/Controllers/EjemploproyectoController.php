@@ -50,7 +50,7 @@ class EjemploproyectoController extends Controller
      */
     public function edit($id)
     {
-        $proyecto = Proyectos::find($id);
+        $proyecto = Ejemploproyecto::find($id);
         return view("projects/update",compact('proyecto'));
     }
 
@@ -63,7 +63,7 @@ class EjemploproyectoController extends Controller
             'titulo' => 'required|max:255',
             'descripcion' => 'required',
         ]);
-        $proyecto = Proyecto::find($id);
+        $proyecto = Ejemploproyecto::find($id);
         $proyecto -> update($request->all());
         return redirect('project/')
             ->with('success', 'Proyecto actualizado correctamente');
@@ -75,14 +75,10 @@ class EjemploproyectoController extends Controller
      */
     public function destroy($id)
     {
-         $proyecto = Proyecto::find($id);
+        $proyecto = EjemploProyecto::findOrFail($id);
+        $proyecto->delete();
 
-    if (!$proyecto) {
-        return redirect('project/')->with('error', 'Proyecto no encontrado');
-    }
-
-    $proyecto->delete();
-
-    return redirect('project/')->with('success', 'Proyecto eliminado correctamente');
+        return redirect('project/')
+            ->with('success', 'Proyecto eliminado correctamente');
     }
 }
