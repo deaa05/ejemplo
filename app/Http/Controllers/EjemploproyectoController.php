@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proyectos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Ejemploproyecto;
 
 class EjemploproyectoController extends Controller
 {
@@ -56,16 +57,32 @@ class EjemploproyectoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Proyectos $proyectos)
+    public function update(Request $request, $id)
     {
-        //
+         $request->validate([
+            'titulo' => 'required|max:255',
+            'descripcion' => 'required',
+        ]);
+        $proyecto = Proyecto::find($id);
+        $proyecto -> update($request->all());
+        return redirect('project/')
+            ->with('success', 'Proyecto actualizado correctamente');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Proyectos $proyectos)
+    public function destroy($id)
     {
-        //
+         $proyecto = Proyecto::find($id);
+
+    if (!$proyecto) {
+        return redirect('project/')->with('error', 'Proyecto no encontrado');
+    }
+
+    $proyecto->delete();
+
+    return redirect('project/')->with('success', 'Proyecto eliminado correctamente');
     }
 }
