@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource("project",EjemploproyectoController::class);
+Route::resource("ejemploproyecto",EjemploproyectoController::class);
