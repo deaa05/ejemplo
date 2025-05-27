@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Proyectos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class Ejemploproyecto extends Controller
+class EjemploproyectoController extends Controller
 {
+    //EjemploproyectoController
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $proyectos = DB::table('proyectos')->get();
+        $proyectos = DB::table('ejemploproyectos')->get();
         return view("projects/index", ['proyectos' => $proyectos]);
     }
 
@@ -29,7 +31,7 @@ class Ejemploproyecto extends Controller
      */
     public function store(Request $request)
     {
-        Proyectos::create($request->all());
+        Ejemploproyecto::create($request->all());
         return redirect('project/')
             ->with('success', 'Proyecto creado satisfactoriamente');
     }
